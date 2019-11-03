@@ -14,7 +14,6 @@ org.opencontainers.image.description="Package JNISpice Java classes, shared obje
 RUN mkdir -p /tmp/jnispice && \
 mkdir -p /tmp/spice-basic/src/main/java/spice/basic && \
 mkdir -p /tmp/spice-basic/src/main/resources/kernels && \
-# yum install -y tcsh gcc java-1.8.0-openjdk-headless maven && \
 yum install -y java-1.8.0-openjdk-headless maven && \
 yum clean all
 
@@ -23,13 +22,6 @@ COPY pom.xml /tmp/spice-basic/
 
 RUN cp /tmp/jnispice/src/JNISpice/spice/basic/*.java /tmp/spice-basic/src/main/java/spice/basic/ && \
 if [ ${RUN_TEST} == "true" ]; then cd /tmp/jnispice/lib; java -cp ../exe:../src/JNISpice/ -Djava.library.path=$(pwd) JNITspice; fi && \
-# cd /tmp/jnispice/exe && \
-# java -cp . JNITSpice && \
-# cd /tmp/jnispice && \
-# /bin/tcsh -c "./makeall.csh" && \
-# cd src/JNISpice && \
-# /bin/tcsh -c "./mkprodct.csh" && \
-# cd /tmp/jnispice && \
 cp /tmp/jnispice/lib/libJNISpice.so /tmp/spice-basic/src/main/resources/ && \
 cd /tmp/spice-basic && \
 mvn clean install
